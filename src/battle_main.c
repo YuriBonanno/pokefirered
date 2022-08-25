@@ -3911,8 +3911,9 @@ static void ReturnFromBattleToOverworld(void)
 {
     if (!(gBattleTypeFlags & BATTLE_TYPE_LINK))
     {
-        RandomlyGivePartyPokerus(gPlayerParty);
-        PartySpreadPokerus(gPlayerParty);
+    	// Issue #1 (pokerus uitzetten) Deze lines commented
+        //RandomlyGivePartyPokerus(gPlayerParty);
+        //PartySpreadPokerus(gPlayerParty);
     }
     if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) || !gReceivedRemoteLinkPlayers)
     {

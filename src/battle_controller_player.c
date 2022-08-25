@@ -23,6 +23,8 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/sound.h"
+// Added mGBA printing
+#include "mgba_printf/mgba.h"
 
 static void PlayerHandleGetMonData(void);
 static void PlayerHandleSetMonData(void);
@@ -2503,6 +2505,8 @@ static void PlayerHandleHealthBarUpdate(void)
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnHealthbarDone;
 }
 
+#define LOG(X, Y) fprintf (fp, #X ": Time:%s, File:%s(%d) " #Y  "\n", __TIMESTAMP__, __FILE__, __LINE__)
+
 static void PlayerHandleExpUpdate(void)
 {
     u8 monId = gBattleBufferA[gActiveBattler][1];
@@ -2521,7 +2525,8 @@ static void PlayerHandleExpUpdate(void)
         expPointsToGive = T1_READ_16(&gBattleBufferA[gActiveBattler][2]);
         taskId = CreateTask(Task_GiveExpToMon, 10);
         gTasks[taskId].tExpTask_monId = monId;
-        gTasks[taskId].tExpTask_gainedExp = expPointsToGive;
+        gTasks[taskId].tExpTask_gainedExp = expPointsToGive * 5; //Issue #2
+        MgbaPrintf(MGBA_LOG_INFO, "I am logging");
         gTasks[taskId].tExpTask_battler = gActiveBattler;
         gBattlerControllerFuncs[gActiveBattler] = PlayerDummy;
     }
